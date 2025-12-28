@@ -52,17 +52,14 @@ class _MainPageState extends State<MainPage> {
   }
 
   List<Widget> _getChildren() {
-    return [HomeView(), CategoryView(), CartView(),MyView()];
+    return [HomeView(), CategoryView(), CartView(), MyView()];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: IndexedStack(
-          index: _currentIndex, 
-          children: _getChildren()
-          ),
+        child: IndexedStack(index: _currentIndex, children: _getChildren()),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -70,8 +67,9 @@ class _MainPageState extends State<MainPage> {
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black,
         onTap: (int index) {
-          _currentIndex = index;
-          setState(() {});
+          setState(() {
+            _currentIndex = index;
+          });
         },
         items: _getTabBarWidget(),
         currentIndex: _currentIndex,
