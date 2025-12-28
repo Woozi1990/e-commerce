@@ -12,15 +12,17 @@ class _CategorySectionState extends State<CategorySection> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 80,
-      child: ListView.builder(
+      child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: 10,
+        separatorBuilder: (context, index) {
+          return const SizedBox(width: 10);
+        },
         itemBuilder: (BuildContext context, int index) {
           return Container(
             alignment: Alignment.center,
             width: 80,
             height: 80,
-            margin:EdgeInsets.symmetric(horizontal: 10),
             color: Colors.blue,
             child: Text("分类$index", style: TextStyle(color: Colors.white)),
           );
@@ -29,3 +31,4 @@ class _CategorySectionState extends State<CategorySection> {
     );
   }
 }
+
