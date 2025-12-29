@@ -1,3 +1,4 @@
+import 'package:e_commerce/api/home.dart';
 import 'package:e_commerce/models/home.dart';
 import 'package:e_commerce/widgets/home/best_sellers_section.dart';
 import 'package:e_commerce/widgets/home/carousel_section.dart';
@@ -14,21 +15,18 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final List<CarouselItem> _carouselList = [
-    CarouselItem(id: "1", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg"),
-    CarouselItem(id: "2", imgUrl: "https://pic.rmb.bdstatic.com/bjh/240219/dump/cded87dc4bf9aecd3aa30c0228eb9add.jpeg"),
-    CarouselItem(id: "3", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg")
-  ];
+  List<CarouselItem> _carouselList = [];
+  List<CategoryItem> _categoryList = [];
 
   List<Widget> _getScrollChildren() {
     return [
-      SliverToBoxAdapter(child: CarouselSection(carouselList: _carouselList,)),
+      SliverToBoxAdapter(child: CarouselSection(carouselList: _carouselList)),
       SliverToBoxAdapter(child: const SizedBox(height: 10)),
 
       SliverToBoxAdapter(
         child: Padding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
-          child: CategorySection(),
+          child: CategorySection(categoryList: _categoryList),
         ),
       ),
       SliverToBoxAdapter(child: const SizedBox(height: 10)),
@@ -58,6 +56,25 @@ class _HomeViewState extends State<HomeView> {
 
       ProductFeedSection(),
     ];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getCarouselList();
+    _getCategoryList();
+  }
+
+  // Get carousel list
+  void _getCarouselList() async {
+    _carouselList = await getCarouselListAPI();
+    setState(() {});
+  }
+
+  // Get category list
+  void _getCategoryList() async {
+    _categoryList = await getCategoryListAPI();
+    setState(() {});
   }
 
   @override
