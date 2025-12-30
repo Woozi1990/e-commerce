@@ -35,3 +35,98 @@ class CategoryItem {
     );
   }
 }
+
+class GoodsItem {
+  String id;
+  String name;
+  String? desc;
+  String price;
+  String picture;
+  int orderNum;
+  GoodsItem({
+    required this.id,
+    required this.name,
+    this.desc,
+    required this.picture,
+    required this.price,
+    required this.orderNum,
+  });
+
+  factory GoodsItem.formJSON(Map<String, dynamic> json) {
+    return GoodsItem(
+      id: json['id']?.toString() ?? "",
+      name: json["name"]?.toString() ?? "",
+      desc: json["desc"]?.toString(),
+      picture: json["picture"]?.toString() ?? "",
+      price: json["price"]?.toString() ?? "",
+      orderNum: int.tryParse(json['orderNum']?.toString() ?? "") ?? 0,
+    );
+  }
+}
+
+class GoodsItems{
+  int counts;
+  int pageSize;
+  int pages;
+  int page;
+  List<GoodsItem> items;
+  GoodsItems({
+    required this.counts,
+    required this.pageSize,
+    required this.pages,
+    required this.page,
+    required this.items,
+  });
+
+  factory GoodsItems.formJSON(Map<String, dynamic> json) {
+    return GoodsItems(
+      counts: int.tryParse(json['counts']?.toString() ?? "") ?? 0,
+      pageSize: int.tryParse(json['pageSize']?.toString() ?? "") ?? 0,
+      pages: int.tryParse(json['pages']?.toString() ?? "") ?? 0,
+      page: int.tryParse(json['page']?.toString() ?? "") ?? 0,
+      items: (json["items"] as List? ?? [])
+          .map((item) => GoodsItem.formJSON(item as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+}
+
+class SubType{
+  String id;
+  String title;
+  GoodsItems goodsItems;
+  SubType({
+    required this.id,
+    required this.title,
+    required this.goodsItems,
+  });
+
+  factory SubType.formJSON(Map<String, dynamic> json) {
+    return SubType(
+      id: json['id']?.toString() ?? "",
+      title: json["title"]?.toString() ?? "",
+      goodsItems: GoodsItems.formJSON(json["goodsItems"] as Map<String, dynamic>),
+    );
+  }
+}
+
+class RecommendItem{
+  String id;
+  String title;
+  List<SubType> subTypes;
+  RecommendItem({
+    required this.id,
+    required this.title,
+    required this.subTypes,
+  });
+
+  factory RecommendItem.formJSON(Map<String, dynamic> json) {
+    return RecommendItem(
+      id: json['id']?.toString() ?? "",
+      title: json["title"]?.toString() ?? "",
+      subTypes: (json["subTypes"] as List? ?? [])
+          .map((item) => SubType.formJSON(item as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+}

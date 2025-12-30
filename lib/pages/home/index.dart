@@ -17,12 +17,15 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   List<CarouselItem> _carouselList = [];
   List<CategoryItem> _categoryList = [];
+  RecommendItem _recommendItem = RecommendItem(id: "", title: "", subTypes: []);
 
   List<Widget> _getScrollChildren() {
     return [
+      //轮播图
       SliverToBoxAdapter(child: CarouselSection(carouselList: _carouselList)),
       SliverToBoxAdapter(child: const SizedBox(height: 10)),
-
+      
+      //分类
       SliverToBoxAdapter(
         child: Padding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
@@ -31,14 +34,16 @@ class _HomeViewState extends State<HomeView> {
       ),
       SliverToBoxAdapter(child: const SizedBox(height: 10)),
 
+      //推荐
       SliverToBoxAdapter(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: RecommendedSection(),
+          child: RecommendedSection(recommendItem: _recommendItem),
         ),
       ),
       SliverToBoxAdapter(child: const SizedBox(height: 10)),
 
+      //爆款推荐 & 今日最佳
       SliverToBoxAdapter(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -54,6 +59,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       SliverToBoxAdapter(child: const SizedBox(height: 10)),
 
+      //商品列表
       ProductFeedSection(),
     ];
   }
@@ -63,6 +69,7 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     _getCarouselList();
     _getCategoryList();
+    _getRecommendedList();
   }
 
   // Get carousel list
@@ -74,6 +81,12 @@ class _HomeViewState extends State<HomeView> {
   // Get category list
   void _getCategoryList() async {
     _categoryList = await getCategoryListAPI();
+    setState(() {});
+  }
+
+  // Get recommended list
+  void _getRecommendedList() async {
+    _recommendItem = await getRecommendedListAPI();
     setState(() {});
   }
 
