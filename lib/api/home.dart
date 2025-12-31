@@ -35,3 +35,14 @@ Future<RecommendItem> getOneStopShopAPI() async {
     await dioRequest.get(HttpConstants.oneStopShop),
   );
 }
+
+Future<List<ProductFeedItem>> getProductFeedListAPI(
+  Map<String, dynamic> params,
+) async {
+  return ((await dioRequest.get(HttpConstants.productFeedList, params: params))
+          as List)
+      .map((item) {
+        return ProductFeedItem.formJSON(item as Map<String, dynamic>);
+      })
+      .toList();
+}

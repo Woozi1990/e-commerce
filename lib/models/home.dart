@@ -64,7 +64,7 @@ class GoodsItem {
   }
 }
 
-class GoodsItems{
+class GoodsItems {
   int counts;
   int pageSize;
   int pages;
@@ -91,26 +91,24 @@ class GoodsItems{
   }
 }
 
-class SubType{
+class SubType {
   String id;
   String title;
   GoodsItems goodsItems;
-  SubType({
-    required this.id,
-    required this.title,
-    required this.goodsItems,
-  });
+  SubType({required this.id, required this.title, required this.goodsItems});
 
   factory SubType.formJSON(Map<String, dynamic> json) {
     return SubType(
       id: json['id']?.toString() ?? "",
       title: json["title"]?.toString() ?? "",
-      goodsItems: GoodsItems.formJSON(json["goodsItems"] as Map<String, dynamic>),
+      goodsItems: GoodsItems.formJSON(
+        json["goodsItems"] as Map<String, dynamic>,
+      ),
     );
   }
 }
 
-class RecommendItem{
+class RecommendItem {
   String id;
   String title;
   List<SubType> subTypes;
@@ -127,6 +125,30 @@ class RecommendItem{
       subTypes: (json["subTypes"] as List? ?? [])
           .map((item) => SubType.formJSON(item as Map<String, dynamic>))
           .toList(),
+    );
+  }
+}
+
+class ProductFeedItem extends GoodsItem {
+  int payCount = 0;
+
+  ProductFeedItem({
+    required super.id,
+    required super.name,
+    required super.price,
+    required super.picture,
+    required super.orderNum,
+    required this.payCount,
+  }):super(desc: "");
+
+  factory ProductFeedItem.formJSON(Map<String, dynamic> json) {
+    return ProductFeedItem(
+      id: json['id']?.toString() ?? "",
+      name: json["name"]?.toString() ?? "",
+      price: json["price"]?.toString() ?? "",
+      picture: json["picture"]?.toString() ?? "",
+      orderNum: int.tryParse(json['orderNum']?.toString() ?? "0") ?? 0,
+      payCount: int.tryParse(json['payCount']?.toString() ?? "0") ?? 0,
     );
   }
 }

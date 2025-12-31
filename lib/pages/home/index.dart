@@ -18,15 +18,25 @@ class _HomeViewState extends State<HomeView> {
   List<CarouselItem> _carouselList = [];
   List<CategoryItem> _categoryList = [];
   RecommendItem _recommendItem = RecommendItem(id: "", title: "", subTypes: []);
-  RecommendItem _bestSellersItem = RecommendItem(id: "", title: "", subTypes: []);
-  RecommendItem _oneStopShopItem = RecommendItem(id: "", title: "", subTypes: []);
+  RecommendItem _bestSellersItem = RecommendItem(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+  RecommendItem _oneStopShopItem = RecommendItem(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+  List<ProductFeedItem> _productFeedList = [];
+  final ScrollController _controller = ScrollController();
 
   List<Widget> _getScrollChildren() {
     return [
       //轮播图
       SliverToBoxAdapter(child: CarouselSection(carouselList: _carouselList)),
       SliverToBoxAdapter(child: const SizedBox(height: 10)),
-      
+
       //分类
       SliverToBoxAdapter(
         child: Padding(
@@ -52,9 +62,19 @@ class _HomeViewState extends State<HomeView> {
           child: Flex(
             direction: Axis.horizontal,
             children: [
-              Expanded(child: BestSellersSection(result:_bestSellersItem, type:"bestSellers")),
+              Expanded(
+                child: BestSellersSection(
+                  result: _bestSellersItem,
+                  type: "bestSellers",
+                ),
+              ),
               const SizedBox(width: 10),
-              Expanded(child: BestSellersSection(result:_oneStopShopItem, type:"oneStopShop")),
+              Expanded(
+                child: BestSellersSection(
+                  result: _oneStopShopItem,
+                  type: "oneStopShop",
+                ),
+              ),
             ],
           ),
         ),
@@ -62,7 +82,7 @@ class _HomeViewState extends State<HomeView> {
       SliverToBoxAdapter(child: const SizedBox(height: 10)),
 
       //商品列表
-      ProductFeedSection(),
+      ProductFeedSection(productFeedList: _productFeedList),
     ];
   }
 
@@ -74,6 +94,19 @@ class _HomeViewState extends State<HomeView> {
     _getRecommendedList();
     _getBestSellersList();
     _getOneStopShopList();
+    _getProductFeedList();
+    _registerEvent();
+  }
+
+  void _registerEvent() {
+    _controller.addListener(() {
+      if (_controller.position.pixels >=
+          (_controller.position.maxScrollExtent - 50)) {
+        // Reached the bottom
+
+        _getProductFeedList();
+      }
+    });
   }
 
   // Get carousel list
@@ -106,8 +139,30 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
+  int _page = 1;
+  bool _isLoading = false;
+  bool _hasMore = true;
+  // Get product feed list
+  void _getProductFeedList() async {
+    if (_isLoading || !_hasMore) return;
+    _isLoading = true;
+
+    int requestLimit = _page * 10;
+    _productFeedList = await getProductFeedListAPI({"limit": requestLimit});
+    _isLoading = false;
+    setState(() {});
+    if (_productFeedList.length < requestLimit) {
+      _hasMore = false;
+      return;
+    }
+    _page++;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: _getScrollChildren());
+    return CustomScrollView(
+      controller: _controller,
+      slivers: _getScrollChildren(),
+    );
   }
 }
