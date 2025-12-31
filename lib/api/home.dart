@@ -23,3 +23,15 @@ Future<RecommendItem> getRecommendedListAPI() async {
     await dioRequest.get(HttpConstants.recommendedList),
   );
 }
+
+Future<RecommendItem> getBestSellersListAPI() async {
+  return RecommendItem.formJSON(
+    await dioRequest.get(HttpConstants.bestSellersList),
+  );
+}
+
+Future<RecommendItem> getOneStopShopAPI() async {
+  return RecommendItem.formJSON(
+    await dioRequest.get(HttpConstants.oneStopShop),
+  );
+}

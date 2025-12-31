@@ -18,6 +18,8 @@ class _HomeViewState extends State<HomeView> {
   List<CarouselItem> _carouselList = [];
   List<CategoryItem> _categoryList = [];
   RecommendItem _recommendItem = RecommendItem(id: "", title: "", subTypes: []);
+  RecommendItem _bestSellersItem = RecommendItem(id: "", title: "", subTypes: []);
+  RecommendItem _oneStopShopItem = RecommendItem(id: "", title: "", subTypes: []);
 
   List<Widget> _getScrollChildren() {
     return [
@@ -50,9 +52,9 @@ class _HomeViewState extends State<HomeView> {
           child: Flex(
             direction: Axis.horizontal,
             children: [
-              Expanded(child: BestSellersSection(name: "爆款推荐")),
+              Expanded(child: BestSellersSection(result:_bestSellersItem, type:"bestSellers")),
               const SizedBox(width: 10),
-              Expanded(child: BestSellersSection(name: "今日最佳")),
+              Expanded(child: BestSellersSection(result:_oneStopShopItem, type:"oneStopShop")),
             ],
           ),
         ),
@@ -70,6 +72,8 @@ class _HomeViewState extends State<HomeView> {
     _getCarouselList();
     _getCategoryList();
     _getRecommendedList();
+    _getBestSellersList();
+    _getOneStopShopList();
   }
 
   // Get carousel list
@@ -87,6 +91,18 @@ class _HomeViewState extends State<HomeView> {
   // Get recommended list
   void _getRecommendedList() async {
     _recommendItem = await getRecommendedListAPI();
+    setState(() {});
+  }
+
+  // Get best sellers list
+  void _getBestSellersList() async {
+    _bestSellersItem = await getBestSellersListAPI();
+    setState(() {});
+  }
+
+  // Get one stop shop list
+  void _getOneStopShopList() async {
+    _oneStopShopItem = await getOneStopShopAPI();
     setState(() {});
   }
 
