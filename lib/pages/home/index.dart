@@ -1,5 +1,6 @@
 import 'package:e_commerce/api/home.dart';
 import 'package:e_commerce/models/home.dart';
+import 'package:e_commerce/utils/toast_utils.dart';
 import 'package:e_commerce/widgets/home/best_sellers_section.dart';
 import 'package:e_commerce/widgets/home/carousel_section.dart';
 import 'package:e_commerce/widgets/home/category_section.dart';
@@ -89,13 +90,10 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    _getCarouselList();
-    _getCategoryList();
-    _getRecommendedList();
-    _getBestSellersList();
-    _getOneStopShopList();
-    _getProductFeedList();
     _registerEvent();
+    Future.microtask(() {
+      _refreshIndicatorKey.currentState?.show();
+    });
   }
 
   void _registerEvent() {
@@ -110,47 +108,42 @@ class _HomeViewState extends State<HomeView> {
   }
 
   // Get carousel list
-  void _getCarouselList() async {
+  Future<void> _getCarouselList() async {
     _carouselList = await getCarouselListAPI();
-    setState(() {});
   }
 
   // Get category list
-  void _getCategoryList() async {
+  Future<void> _getCategoryList() async {
     _categoryList = await getCategoryListAPI();
-    setState(() {});
   }
 
   // Get recommended list
-  void _getRecommendedList() async {
+  Future<void> _getRecommendedList() async {
     _recommendItem = await getRecommendedListAPI();
-    setState(() {});
   }
 
   // Get best sellers list
-  void _getBestSellersList() async {
+  Future<void> _getBestSellersList() async {
     _bestSellersItem = await getBestSellersListAPI();
-    setState(() {});
   }
 
   // Get one stop shop list
-  void _getOneStopShopList() async {
+  Future<void> _getOneStopShopList() async {
     _oneStopShopItem = await getOneStopShopAPI();
-    setState(() {});
   }
 
   int _page = 1;
   bool _isLoading = false;
   bool _hasMore = true;
   // Get product feed list
-  void _getProductFeedList() async {
+  Future<void> _getProductFeedList() async {
     if (_isLoading || !_hasMore) return;
     _isLoading = true;
 
     int requestLimit = _page * 10;
     _productFeedList = await getProductFeedListAPI({"limit": requestLimit});
     _isLoading = false;
-    setState(() {});
+
     if (_productFeedList.length < requestLimit) {
       _hasMore = false;
       return;
@@ -158,11 +151,37 @@ class _HomeViewState extends State<HomeView> {
     _page++;
   }
 
+  Future<void> _onRefresh() async {
+    _page = 1;
+    _isLoading = false;
+    _hasMore = true;
+    await Future.wait([
+      _getCarouselList(),
+      _getCategoryList(),
+      _getRecommendedList(),
+      _getBestSellersList(),
+      _getOneStopShopList(),
+      _getProductFeedList(),
+    ]);
+
+
+    if(!mounted) return;
+    setState(() {});
+    ToastUtils.showToast(context, "刷新成功");
+  }
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: _controller,
-      slivers: _getScrollChildren(),
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: _onRefresh,
+      child: CustomScrollView(
+        controller: _controller,
+        slivers: _getScrollChildren(),
+      ),
     );
   }
 }
