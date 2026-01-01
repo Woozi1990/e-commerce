@@ -1,7 +1,7 @@
 import 'package:e_commerce/pages/cart/index.dart';
 import 'package:e_commerce/pages/category/index.dart';
 import 'package:e_commerce/pages/home/index.dart';
-import 'package:e_commerce/pages/my/index.dart';
+import 'package:e_commerce/pages/me/index.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   List<Widget> _getChildren() {
-    return [HomeView(), CategoryView(), CartView(), MyView()];
+    return [HomeView(), CategoryView(), CartView(), MeView()];
   }
 
   @override

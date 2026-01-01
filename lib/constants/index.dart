@@ -11,4 +11,5 @@ class HttpConstants{
   static const String bestSellersList = "/hot/inVogue"; //爆款推荐
   static const String oneStopShop = "/hot/oneStop"; //一站式购物
   static const String productFeedList = "/home/recommend"; //商品列表 
+  static const String meRecommendList = "/home/goods/guessLike"; //猜你喜欢
 }

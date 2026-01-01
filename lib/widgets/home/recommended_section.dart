@@ -43,7 +43,7 @@ class _RecommendedSectionState extends State<RecommendedSection> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: AssetImage("images/recommend_left.jpeg"),
+          image: AssetImage("images/home/recommend_left.jpeg"),
           fit: BoxFit.cover,
         ),
       ),
@@ -60,7 +60,7 @@ class _RecommendedSectionState extends State<RecommendedSection> {
             child: Image.network(
               errorBuilder: (context, error, stackTrace) {
                 return Image.asset(
-                  "images/recommend_left.jpeg",
+                  "images/home/recommend_left.jpeg",
                   width: 120,
                   height: 140,
                   fit: BoxFit.cover,
@@ -99,7 +99,7 @@ class _RecommendedSectionState extends State<RecommendedSection> {
         color: Colors.blue,
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: AssetImage("images/background.jpeg"),
+          image: AssetImage("images/home/background.jpeg"),
           fit: BoxFit.cover,
         ),
       ),

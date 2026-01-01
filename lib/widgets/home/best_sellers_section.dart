@@ -41,7 +41,7 @@ class _BestSellersSectionState extends State<BestSellersSection> {
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
-                    "images/recommend_left.jpeg",
+                    "images/home/recommend_left.jpeg",
                     width: 80,
                     height: 100,
                     fit: BoxFit.cover,

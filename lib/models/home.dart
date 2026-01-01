@@ -152,3 +152,4 @@ class ProductFeedItem extends GoodsItem {
     );
   }
 }
+
