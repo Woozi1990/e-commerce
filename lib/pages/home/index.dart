@@ -101,7 +101,6 @@ class _HomeViewState extends State<HomeView> {
       if (_controller.position.pixels >=
           (_controller.position.maxScrollExtent - 50)) {
         // Reached the bottom
-        print("Reached the bottom");
         _getProductFeedList();
       }
     });
@@ -141,10 +140,8 @@ class _HomeViewState extends State<HomeView> {
     _isLoading = true;
 
     int requestLimit = _page * 10;
-    print("Requesting product feed with limit: $requestLimit");
     _productFeedList = await getProductFeedListAPI({"limit": requestLimit});
     _isLoading = false;
-    print("Fetched ${_productFeedList.length} product feed items");
     setState(() {});
     if (_productFeedList.length < requestLimit) {
       _hasMore = false;
