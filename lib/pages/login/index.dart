@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:e_commerce/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../api/user.dart';
+import '../../stores/user_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,9 +15,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _accountController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  // final UserController _userController = Get.find();
+  final TextEditingController _accountController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final UserController _userController = Get.find();
   bool _termsAccepted = false;
 
   @override
@@ -208,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
         "password": _passwordController.text,
       });
       if(!mounted) return;
-      // _userController.saveUserInfo(res);
+      _userController.updateUserInfo(res);
       // tokenManager.setToken(res.token);
       // LoadingDialog.hide(context);
       ToastUtils.showToast(context, "登录成功");

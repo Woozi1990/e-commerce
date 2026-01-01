@@ -1,8 +1,10 @@
 import 'package:e_commerce/api/me.dart';
 import 'package:e_commerce/models/home.dart';
+import 'package:e_commerce/stores/user_controller.dart';
 import 'package:e_commerce/widgets/home/product_feed_section.dart';
 import 'package:e_commerce/widgets/me/me_recommended_section.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MeView extends StatefulWidget {
   const MeView({super.key});
@@ -14,7 +16,7 @@ class MeView extends StatefulWidget {
 class _MeViewState extends State<MeView> {
   final List<ProductFeedItem> _meRecommendedList = [];
   final Map<String, dynamic> _meRecommendedParams = {"page": 1, "pageSize": 20};
-
+  final UserController _userController = Get.put(UserController());
   Widget _buildHeader() {
     return Container(
       decoration: BoxDecoration(
@@ -27,25 +29,38 @@ class _MeViewState extends State<MeView> {
       padding: const EdgeInsets.only(left: 20, right: 40, top: 80, bottom: 20),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 26,
-            backgroundImage: const AssetImage('images/me/goods_avatar.png'),
-            backgroundColor: Colors.white,
-          ),
+          Obx(() {
+            return CircleAvatar(
+              radius: 26,
+              backgroundImage: _userController.user.value.avatar.isNotEmpty
+                  ? NetworkImage(_userController.user.value.avatar)
+                  : const AssetImage("images/me/ic_user_avatar.png"),
+              backgroundColor: Colors.white,
+            );
+          }),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/login");
-                  },
-                  child: Text(
-                    '立即登录',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                ),
+                Obx(() {
+                  return GestureDetector(
+                    onTap: () {
+                      if (_userController.user.value.id.isEmpty) {
+                        Navigator.pushNamed(context, '/login');
+                      }
+                    },
+                    child: Text(
+                      _userController.user.value.id.isEmpty
+                          ? '立即登录'
+                          : _userController.user.value.account,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  );
+                }),
               ],
             ),
           ),
