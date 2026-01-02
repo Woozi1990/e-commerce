@@ -1,5 +1,6 @@
 import 'package:e_commerce/api/me.dart';
 import 'package:e_commerce/models/home.dart';
+import 'package:e_commerce/stores/token_manager.dart';
 import 'package:e_commerce/stores/user_controller.dart';
 import 'package:e_commerce/widgets/home/product_feed_section.dart';
 import 'package:e_commerce/widgets/me/me_recommended_section.dart';
@@ -16,7 +17,8 @@ class MeView extends StatefulWidget {
 class _MeViewState extends State<MeView> {
   final List<ProductFeedItem> _meRecommendedList = [];
   final Map<String, dynamic> _meRecommendedParams = {"page": 1, "pageSize": 20};
-  final UserController _userController = Get.put(UserController());
+  final UserController _userController = Get.find();
+
   Widget _buildHeader() {
     return Container(
       decoration: BoxDecoration(
@@ -64,9 +66,62 @@ class _MeViewState extends State<MeView> {
               ],
             ),
           ),
+          Obx(() {
+            return _buildLogoutButton();
+          }),
         ],
       ),
     );
+  }
+
+  Widget _buildLogoutButton() {
+    return _userController.user.value.id.isNotEmpty
+        ? SizedBox(
+            width: 100,
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('提示'),
+                      content: const Text('确定要退出登录吗？'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context); // 关闭对话框
+                          },
+                          child: const Text('取消'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context); // 关闭对话框
+                            // 执行退出登录操作
+                            _userController.clearUserInfo();
+                            tokenManager.removeToken();
+                            setState(() {});
+                          },
+                          child: const Text('确定'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: const Text(
+                '退出登录',
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ),
+          )
+        : Text('');
   }
 
   Widget _buildMembershipCard() {

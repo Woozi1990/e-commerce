@@ -1,8 +1,12 @@
+import 'package:e_commerce/api/user.dart';
 import 'package:e_commerce/pages/cart/index.dart';
 import 'package:e_commerce/pages/category/index.dart';
 import 'package:e_commerce/pages/home/index.dart';
 import 'package:e_commerce/pages/me/index.dart';
+import 'package:e_commerce/stores/token_manager.dart';
+import 'package:e_commerce/stores/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -36,6 +40,21 @@ class _MainPageState extends State<MainPage> {
   ];
 
   int _currentIndex = 0;
+  final UserController _userController = Get.put(UserController());
+
+  @override
+  void initState() {
+    super.initState();
+    _initUser();
+  }
+
+  Future<void> _initUser() async {
+    await tokenManager.init();
+    if(tokenManager.getToken().isNotEmpty){
+      // 获取用户信息
+     _userController.updateUserInfo(await getUserProfileAPI());
+    }
+  }
 
   List<BottomNavigationBarItem> _getTabBarWidget() {
     return List.generate(_tabList.length, (int index) {

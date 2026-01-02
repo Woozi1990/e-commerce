@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:e_commerce/stores/token_manager.dart';
+import 'package:e_commerce/utils/loading_dialog.dart';
 import 'package:e_commerce/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -204,21 +206,21 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _login() async {
     try {
-      // LoadingDialog.show(context, "登录中...");
+      LoadingDialog.show(context, message: "登录中...");
       final res = await loginAPI({
         "account": _accountController.text,
         "password": _passwordController.text,
       });
       if(!mounted) return;
       _userController.updateUserInfo(res);
-      // tokenManager.setToken(res.token);
-      // LoadingDialog.hide(context);
+      tokenManager.setToken(res.token);
       ToastUtils.showToast(context, "登录成功");
       Navigator.pop(context);
     } catch (e) {
-      // LoadingDialog.hide(context);
       if(!mounted) return;
       ToastUtils.showToast(context, (e as DioException).message);
-    }
+    } finally {
+      LoadingDialog.hide(context);
+    } 
   }
 }

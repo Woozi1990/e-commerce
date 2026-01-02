@@ -10,3 +10,11 @@ Future<UserInfo> loginAPI(Map<String, dynamic> params) async {
     ),
   );
 }
+
+Future<UserInfo> getUserProfileAPI() async {
+  return UserInfo.fromJSON(
+    await dioRequest.get(
+      HttpConstants.userProfile,
+    ),
+  );
+}
