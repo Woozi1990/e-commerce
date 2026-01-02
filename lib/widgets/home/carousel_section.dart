@@ -40,7 +40,7 @@ class _CarouselSectionState extends State<CarouselSection> {
 
   Widget _getSearch() {
     return Positioned(
-      top: 5,
+      top: MediaQuery.of(context).padding.top,
       left: 0,
       right: 0,
       child: Padding(

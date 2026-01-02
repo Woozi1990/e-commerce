@@ -53,17 +53,17 @@ class _ProductFeedSectionState extends State<ProductFeedSection> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
-                  children: [
-                    TextSpan(text: " "),
-                    TextSpan(
-                      text: widget.productFeedList[index].price,
-                      style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
+                  // children: [
+                  //   TextSpan(text: " "),
+                  //   TextSpan(
+                  //     text: widget.productFeedList[index].price,
+                  //     style: TextStyle(
+                  //       decoration: TextDecoration.lineThrough,
+                  //       fontSize: 12,
+                  //       color: Colors.grey,
+                  //     ),
+                  //   ),
+                  // ],
                 ),
               ),
               Text(
@@ -85,7 +85,7 @@ class _ProductFeedSectionState extends State<ProductFeedSection> {
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        childAspectRatio: 0.75,
+        childAspectRatio: 0.7,
       ),
       itemBuilder: (BuildContext context, int index) {
         return Padding(

@@ -11,7 +11,7 @@ class RecommendedSection extends StatefulWidget {
 
 class _RecommendedSectionState extends State<RecommendedSection> {
   List<GoodsItem> _getRecommendedItem() {
-    if(widget.recommendItem.subTypes.isEmpty){
+    if (widget.recommendItem.subTypes.isEmpty) {
       return [];
     }
     return widget.recommendItem.subTypes.first.goodsItems.items
@@ -53,38 +53,40 @@ class _RecommendedSectionState extends State<RecommendedSection> {
   List<Widget> _getChildrenList() {
     List<GoodsItem> list = _getRecommendedItem();
     return List.generate(list.length, (int index) {
-      return Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset(
-                  "assets/images/home/recommend_left.jpeg",
-                  width: 120,
-                  height: 140,
-                  fit: BoxFit.cover,
-                );
-              },
-              list[index].picture,
-              width: 120,
-              height: 140,
-              fit: BoxFit.cover,
+      return Expanded(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    "assets/images/home/recommend_left.jpeg",
+                    // width: 120,
+                    height: 140,
+                    fit: BoxFit.cover,
+                  );
+                },
+                list[index].picture,
+                // width: 120,
+                height: 140,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(20 ),
+            SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                "￥${list[index].price}",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-            child: Text(
-              "￥${list[index].price}",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }
@@ -110,8 +112,10 @@ class _RecommendedSectionState extends State<RecommendedSection> {
           Row(
             children: [
               _buildLeft(),
+              SizedBox(width: 10),
               Expanded(
                 child: Row(
+                  spacing: 10,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: _getChildrenList(),
                 ),

@@ -25,38 +25,38 @@ class _BestSellersSectionState extends State<BestSellersSection> {
 
   List<Widget> _getChildrenList() {
     return _items.map((item) {
-      return Container(
-        width: 80,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                item.picture,
-                width: 80,
-                height: 100,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    "assets/images/home/recommend_left.jpeg",
-                    width: 80,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  );
-                },
+      return Expanded(
+        child: Container(
+          // width: 80,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  item.picture,
+                  height: 100,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      "assets/images/home/recommend_left.jpeg",
+                      height: 100,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              "￥${item.price}",
-              style: TextStyle(
-                fontSize: 12,
-                color: const Color.fromARGB(255, 104, 28, 23),
+              SizedBox(height: 5),
+              Text(
+                "￥${item.price}",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: const Color.fromARGB(255, 104, 28, 23),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     }).toList();
@@ -75,7 +75,7 @@ class _BestSellersSectionState extends State<BestSellersSection> {
         ),
         SizedBox(width: 10),
         Text(
-          widget.type == "bestSellers" ? "大家都在买的商品" : "精选优质好物",
+          widget.type == "bestSellers" ? "大家都在买" : "精选优质好物",
           style: TextStyle(fontSize: 10, color: Colors.grey),
         ),
       ],

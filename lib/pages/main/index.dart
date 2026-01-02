@@ -50,9 +50,9 @@ class _MainPageState extends State<MainPage> {
 
   Future<void> _initUser() async {
     await tokenManager.init();
-    if(tokenManager.getToken().isNotEmpty){
+    if (tokenManager.getToken().isNotEmpty) {
       // 获取用户信息
-     _userController.updateUserInfo(await getUserProfileAPI());
+      _userController.updateUserInfo(await getUserProfileAPI());
     }
   }
 
@@ -77,9 +77,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: IndexedStack(index: _currentIndex, children: _getChildren()),
-      ),
+      body: IndexedStack(
+        index: _currentIndex, 
+        children: _getChildren()
+        ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
