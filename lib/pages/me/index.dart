@@ -36,7 +36,7 @@ class _MeViewState extends State<MeView> {
               radius: 26,
               backgroundImage: _userController.user.value.avatar.isNotEmpty
                   ? NetworkImage(_userController.user.value.avatar)
-                  : const AssetImage("images/me/ic_user_avatar.png"),
+                  : const AssetImage("assets/images/me/ic_user_avatar.png"),
               backgroundColor: Colors.white,
             );
           }),
@@ -138,7 +138,7 @@ class _MeViewState extends State<MeView> {
         ),
         child: Row(
           children: [
-            Image.asset("images/me/ic_user_vip.png", width: 30, height: 30),
+            Image.asset("assets/images/me/ic_user_vip.png", width: 30, height: 30),
             SizedBox(width: 10),
             Expanded(
               child: Text(
@@ -190,9 +190,9 @@ class _MeViewState extends State<MeView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            item("images/me/ic_user_collect.png", '我的收藏'),
-            item("images/me/ic_user_history.png", '我的足迹'),
-            item("images/me/ic_user_unevaluated.png", '我的客服'),
+            item("assets/images/me/ic_user_collect.png", '我的收藏'),
+            item("assets/images/me/ic_user_history.png", '我的足迹'),
+            item("assets/images/me/ic_user_unevaluated.png", '我的客服'),
           ],
         ),
       ),
@@ -237,11 +237,11 @@ class _MeViewState extends State<MeView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  orderItem("images/me/ic_user_order.png", '全部订单'),
-                  orderItem("images/me/ic_user_obligation.png", '待付款'),
-                  orderItem("images/me/ic_user_unreceived.png", '待发货'),
-                  orderItem("images/me/ic_user_unshipped.png", '待收货'),
-                  orderItem("images/me/ic_user_unevaluated.png", '待评价'),
+                  orderItem("assets/images/me/ic_user_order.png", '全部订单'),
+                  orderItem("assets/images/me/ic_user_obligation.png", '待付款'),
+                  orderItem("assets/images/me/ic_user_unreceived.png", '待发货'),
+                  orderItem("assets/images/me/ic_user_unshipped.png", '待收货'),
+                  orderItem("assets/images/me/ic_user_unevaluated.png", '待评价'),
                 ],
               ),
             ],

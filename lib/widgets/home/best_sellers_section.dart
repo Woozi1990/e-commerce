@@ -5,30 +5,29 @@ class BestSellersSection extends StatefulWidget {
   final RecommendItem result;
   final String type;
 
-  const BestSellersSection({super.key, required this.result, required this.type});
+  const BestSellersSection({
+    super.key,
+    required this.result,
+    required this.type,
+  });
 
   @override
   State<BestSellersSection> createState() => _BestSellersSectionState();
 }
 
 class _BestSellersSectionState extends State<BestSellersSection> {
-
   List<GoodsItem> get _items {
-    if(widget.result.subTypes.isEmpty){
+    if (widget.result.subTypes.isEmpty) {
       return [];
     }
-    return widget.result.subTypes.first.goodsItems.items
-        .take(2)
-        .toList();
+    return widget.result.subTypes.first.goodsItems.items.take(2).toList();
   }
 
   List<Widget> _getChildrenList() {
-    return _items.map((item){
+    return _items.map((item) {
       return Container(
         width: 80,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -41,7 +40,7 @@ class _BestSellersSectionState extends State<BestSellersSection> {
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
-                    "images/home/recommend_left.jpeg",
+                    "assets/images/home/recommend_left.jpeg",
                     width: 80,
                     height: 100,
                     fit: BoxFit.cover,
@@ -52,7 +51,10 @@ class _BestSellersSectionState extends State<BestSellersSection> {
             SizedBox(height: 5),
             Text(
               "￥${item.price}",
-              style: TextStyle(fontSize: 12, color: const Color.fromARGB(255, 104, 28, 23)),
+              style: TextStyle(
+                fontSize: 12,
+                color: const Color.fromARGB(255, 104, 28, 23),
+              ),
             ),
           ],
         ),
@@ -73,12 +75,13 @@ class _BestSellersSectionState extends State<BestSellersSection> {
         ),
         SizedBox(width: 10),
         Text(
-          widget.type == "bestSellers" ? "大家都在买的商品" : "精选优质好物", 
-          style: TextStyle(fontSize: 10, 
-          color: Colors.grey)),
+          widget.type == "bestSellers" ? "大家都在买的商品" : "精选优质好物",
+          style: TextStyle(fontSize: 10, color: Colors.grey),
+        ),
       ],
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -88,7 +91,9 @@ class _BestSellersSectionState extends State<BestSellersSection> {
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: widget.type == "bestSellers"? Color.fromARGB(255, 224, 169, 169) : Color.fromARGB(255, 240, 255, 240),
+          color: widget.type == "bestSellers"
+              ? Color.fromARGB(255, 224, 169, 169)
+              : Color.fromARGB(255, 240, 255, 240),
         ),
         child: Column(
           children: [
@@ -99,8 +104,8 @@ class _BestSellersSectionState extends State<BestSellersSection> {
               children: _getChildrenList(),
             ),
           ],
+        ),
       ),
-    )
     );
   }
 }

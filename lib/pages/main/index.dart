@@ -18,23 +18,23 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final List<Map<String, String>> _tabList = [
     {
-      "icon": "icon/icon-home-normal.png",
-      "active-icon": "icon/icon-home-active.png",
+      "icon": "assets/icons/icon-home-normal.png",
+      "active-icon": "assets/icons/icon-home-active.png",
       "text": "首页",
     },
     {
-      "icon": "icon/icon-category-normal.png",
-      "active-icon": "icon/icon-category-active.png",
+      "icon": "assets/icons/icon-category-normal.png",
+      "active-icon": "assets/icons/icon-category-active.png",
       "text": "分类",
     },
     {
-      "icon": "icon/icon-cart-normal.png",
-      "active-icon": "icon/icon-cart-active.png",
+      "icon": "assets/icons/icon-cart-normal.png",
+      "active-icon": "assets/icons/icon-cart-active.png",
       "text": "购物车",
     },
     {
-      "icon": "icon/icon-my-normal.png",
-      "active-icon": "icon/icon-my-active.png",
+      "icon": "assets/icons/icon-my-normal.png",
+      "active-icon": "assets/icons/icon-my-active.png",
       "text": "我的",
     },
   ];

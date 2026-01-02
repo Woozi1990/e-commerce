@@ -22,7 +22,7 @@ class _ProductFeedSectionState extends State<ProductFeedSection> {
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return Image.asset(
-                  "images/home/recommend_left.jpeg",
+                  "assets/images/home/recommend_left.jpeg",
                   fit: BoxFit.cover,
                 );
               },
